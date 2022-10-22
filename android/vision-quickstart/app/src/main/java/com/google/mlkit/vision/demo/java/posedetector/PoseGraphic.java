@@ -196,7 +196,7 @@ public class PoseGraphic extends Graphic {
     }
 
     if ( Math.abs(leftCheckRatio-leftRatio)<= 0.2 && (int)(getAngle(leftHip, leftKnee, leftAnkle))>60 && (int)(getAngle(leftHip, leftKnee, leftAnkle))<120) {
-      if(PoseCounter.getInit()==1){
+      if(PoseCounter.getLeftInit()==1){
         PoseCounter.count();
         RingTonePlayer.playAudio();
         PoseCounter.countLeftDeInit();
@@ -208,7 +208,7 @@ public class PoseGraphic extends Graphic {
     }
 
     if ( Math.abs(rightCheckRatio-rightRatio)<= 0.2 && (int)(getAngle(rightHip, rightKnee, rightAnkle))>60 && (int)(getAngle(rightHip, rightKnee, rightAnkle))<120) {
-      if(PoseCounter.getInit()==1){
+      if(PoseCounter.getRightInit()==1){
         PoseCounter.count();
         RingTonePlayer.playAudio();
         PoseCounter.countRightDeInit();

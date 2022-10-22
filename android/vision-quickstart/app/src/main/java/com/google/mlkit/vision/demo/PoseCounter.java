@@ -23,7 +23,10 @@ public class PoseCounter {
     public static int getCount(){
         return y;
     }
-    public static int getInit(){
+    public static int getLeftInit(){
         return x;
+    }
+    public static int getRightInit(){
+        return z;
     }
 }
