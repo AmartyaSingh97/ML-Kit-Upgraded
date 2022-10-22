@@ -19,30 +19,18 @@ package com.google.mlkit.vision.demo.java.posedetector;
 import static java.lang.Math.atan2;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.media.AudioManager;
-import android.media.ToneGenerator;
-import android.util.Log;
-import android.view.Display;
-import android.view.View;
-import android.view.WindowManager;
-import android.view.WindowMetrics;
 import android.widget.Toast;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import com.google.mlkit.vision.common.PointF3D;
-import com.google.mlkit.vision.demo.CameraSource;
 import com.google.mlkit.vision.demo.GraphicOverlay;
 import com.google.mlkit.vision.demo.GraphicOverlay.Graphic;
 import com.google.mlkit.vision.demo.PoseCounter;
-import com.google.mlkit.vision.demo.R;
+import com.google.mlkit.vision.demo.RingTonePlayer;
 import com.google.mlkit.vision.pose.Pose;
 import com.google.mlkit.vision.pose.PoseLandmark;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -204,26 +192,28 @@ public class PoseGraphic extends Graphic {
 
     //Count left high knees.
     if((int)(getAngle(leftHip, leftKnee, leftAnkle)) >150){
-      PoseCounter.countInit();
+      PoseCounter.countLeftInit();
     }
 
     if ( Math.abs(leftCheckRatio-leftRatio)<= 0.2 && (int)(getAngle(leftHip, leftKnee, leftAnkle))>60 && (int)(getAngle(leftHip, leftKnee, leftAnkle))<120) {
-      if(PoseCounter.getInit()==1){
+      if(PoseCounter.getLeftInit()==1){
         PoseCounter.count();
-        PoseCounter.countDeInit();
+        RingTonePlayer.playAudio();
+        PoseCounter.countLeftDeInit();
       }}
-
+//    RingTonePlayer.stopAudio();
     //Count right high knees.
     if((int)(getAngle(rightHip, rightKnee, rightAnkle)) >150){
-      PoseCounter.countInit();
+      PoseCounter.countRightInit();
     }
 
     if ( Math.abs(rightCheckRatio-rightRatio)<= 0.2 && (int)(getAngle(rightHip, rightKnee, rightAnkle))>60 && (int)(getAngle(rightHip, rightKnee, rightAnkle))<120) {
-      if(PoseCounter.getInit()==1){
+      if(PoseCounter.getRightInit()==1){
         PoseCounter.count();
-        PoseCounter.countDeInit();
+        RingTonePlayer.playAudio();
+        PoseCounter.countRightDeInit();
       }}
-
+//    RingTonePlayer.stopAudio();
     // Face
     drawLine(canvas, nose, lefyEyeInner, whitePaint);
     drawLine(canvas, lefyEyeInner, lefyEye, whitePaint);
