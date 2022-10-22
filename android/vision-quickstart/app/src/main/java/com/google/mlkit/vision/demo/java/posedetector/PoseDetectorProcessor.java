@@ -16,8 +16,12 @@
 
 package com.google.mlkit.vision.demo.java.posedetector;
 
+import static java.lang.Math.atan2;
+
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.Task;
 import com.google.android.odml.image.MlImage;
@@ -29,6 +33,8 @@ import com.google.mlkit.vision.pose.Pose;
 import com.google.mlkit.vision.pose.PoseDetection;
 import com.google.mlkit.vision.pose.PoseDetector;
 import com.google.mlkit.vision.pose.PoseDetectorOptionsBase;
+import com.google.mlkit.vision.pose.PoseLandmark;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -40,7 +46,6 @@ public class PoseDetectorProcessor
   private static final String TAG = "PoseDetectorProcessor";
 
   private final PoseDetector detector;
-
   private final boolean showInFrameLikelihood;
   private final boolean visualizeZ;
   private final boolean rescaleZForVisualization;
@@ -145,7 +150,6 @@ public class PoseDetectorProcessor
             rescaleZForVisualization,
             poseWithClassification.classificationResult));
   }
-
   @Override
   protected void onFailure(@NonNull Exception e) {
     Log.e(TAG, "Pose detection failed!", e);
