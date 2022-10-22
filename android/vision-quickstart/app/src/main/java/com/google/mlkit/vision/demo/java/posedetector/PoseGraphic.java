@@ -192,26 +192,26 @@ public class PoseGraphic extends Graphic {
 
     //Count left high knees.
     if((int)(getAngle(leftHip, leftKnee, leftAnkle)) >150){
-      PoseCounter.countInit();
+      PoseCounter.countLeftInit();
     }
 
     if ( Math.abs(leftCheckRatio-leftRatio)<= 0.2 && (int)(getAngle(leftHip, leftKnee, leftAnkle))>60 && (int)(getAngle(leftHip, leftKnee, leftAnkle))<120) {
       if(PoseCounter.getInit()==1){
         PoseCounter.count();
         RingTonePlayer.playAudio();
-        PoseCounter.countDeInit();
+        PoseCounter.countLeftDeInit();
       }}
 //    RingTonePlayer.stopAudio();
     //Count right high knees.
     if((int)(getAngle(rightHip, rightKnee, rightAnkle)) >150){
-      PoseCounter.countInit();
+      PoseCounter.countRightInit();
     }
 
     if ( Math.abs(rightCheckRatio-rightRatio)<= 0.2 && (int)(getAngle(rightHip, rightKnee, rightAnkle))>60 && (int)(getAngle(rightHip, rightKnee, rightAnkle))<120) {
       if(PoseCounter.getInit()==1){
         PoseCounter.count();
         RingTonePlayer.playAudio();
-        PoseCounter.countDeInit();
+        PoseCounter.countRightDeInit();
       }}
 //    RingTonePlayer.stopAudio();
     // Face
