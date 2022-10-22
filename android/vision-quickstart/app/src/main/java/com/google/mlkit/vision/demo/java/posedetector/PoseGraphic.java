@@ -36,6 +36,7 @@ import android.widget.Toast;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.mlkit.vision.common.PointF3D;
+import com.google.mlkit.vision.demo.CameraSource;
 import com.google.mlkit.vision.demo.GraphicOverlay;
 import com.google.mlkit.vision.demo.GraphicOverlay.Graphic;
 import com.google.mlkit.vision.demo.PoseCounter;
@@ -47,6 +48,9 @@ import java.util.Locale;
 
 /** Draw the detected pose in preview. */
 public class PoseGraphic extends Graphic {
+
+  private static final double leftCheckRatio = 0.7;
+    private static final double rightCheckRatio = 0.7;
 
   private static final float DOT_RADIUS = 8.0f;
   private static final float IN_FRAME_LIKELIHOOD_TEXT_SIZE = 30.0f;
@@ -177,16 +181,20 @@ public class PoseGraphic extends Graphic {
     assert rightShoulder != null;
     assert rightHip != null;
     assert rightKnee != null;
-
-
-
-    float screenWidth = 360;
-    float screenHeight = 640;
-
-    //Check whether the object is in frame or not
     assert leftAnkle != null;
     assert nose != null;
     assert rightAnkle != null;
+
+    double leftRatio = (leftShoulder.getPosition().y-leftHip.getPosition().y)/(rightHip.getPosition().y-rightAnkle.getPosition().y);
+    double rightRatio = (rightShoulder.getPosition().y-rightHip.getPosition().y)/(leftHip.getPosition().y-leftAnkle.getPosition().y);
+
+    float screenWidth = overlay.getImageWidth();
+    float screenHeight = overlay.getImageHeight();
+
+//    Log.d("screenWidth", String.valueOf(screenWidth));
+//    Log.d("screenHeight", String.valueOf(screenHeight));
+
+    //Check whether the object is in frame or not
     if(leftAnkle.getPosition().x<0 || leftAnkle.getPosition().y<0 || rightAnkle.getPosition().x<0 || rightAnkle.getPosition().y<0 || nose.getPosition().x<0 || nose.getPosition().y<0){
       Toast.makeText(getApplicationContext(), "Object is out of frame", Toast.LENGTH_SHORT).show();
     }
@@ -198,7 +206,8 @@ public class PoseGraphic extends Graphic {
     if((int)(getAngle(leftHip, leftKnee, leftAnkle)) >150){
       PoseCounter.countInit();
     }
-    if ((int)(getAngle(leftHip, leftKnee, leftAnkle))>60 && (int)(getAngle(leftHip, leftKnee, leftAnkle))<120) {
+
+    if ( Math.abs(leftCheckRatio-leftRatio)<= 0.2 && (int)(getAngle(leftHip, leftKnee, leftAnkle))>60 && (int)(getAngle(leftHip, leftKnee, leftAnkle))<120) {
       if(PoseCounter.getInit()==1){
         PoseCounter.count();
         PoseCounter.countDeInit();
@@ -208,7 +217,8 @@ public class PoseGraphic extends Graphic {
     if((int)(getAngle(rightHip, rightKnee, rightAnkle)) >150){
       PoseCounter.countInit();
     }
-    if ((int)(getAngle(rightHip, rightKnee, rightAnkle))>60 && (int)(getAngle(rightHip, rightKnee, rightAnkle))<120) {
+
+    if ( Math.abs(rightCheckRatio-rightRatio)<= 0.2 && (int)(getAngle(rightHip, rightKnee, rightAnkle))>60 && (int)(getAngle(rightHip, rightKnee, rightAnkle))<120) {
       if(PoseCounter.getInit()==1){
         PoseCounter.count();
         PoseCounter.countDeInit();
